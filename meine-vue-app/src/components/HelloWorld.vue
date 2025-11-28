@@ -1,15 +1,36 @@
-<script setup>
-import { ref } from 'vue'
+<script setup lang="ts">
+import {onMounted, ref, Ref} from 'vue'
+
+import axios from 'axios'
+
+type Hallo = { name: string; }
+
+const hallos: Ref<Hallo[]> = ref([])
+const nameField = ref('')
+const affiliationField = ref('')
+const heightField = ref()
+
+function requestHallos () : void {
+  axios
+      .get <Hallo[]>('https://webtech-backend-6ot9.onrender.com/sayHello')
+      .then((response) => (hallos.value = response.data))
+      .catch((error) => console.log(error))
+}
+
+
 
 defineProps({
   msg: String,
 })
 
 const count = ref(0)
+
+// Lifecycle Hook
+onMounted(() => requestHallos())
 </script>
 
 <template>
-  <h1>{{ msg }}</h1>
+  <h1>{{ hallos }}</h1>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>

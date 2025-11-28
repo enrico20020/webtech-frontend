@@ -9,6 +9,9 @@ const notes = ref([
   { id: 2, text: 'Handy' },
   { id: 3, text: 'Macbook' },
 ]); // zu ref(null) ändern nach vorstellen 2
+
+
+
 </script>
 
 <template>
@@ -23,6 +26,8 @@ const notes = ref([
       v-for="note in notes":key="note.id" >
       // übergibt Notiz an Child Component
       <NoteItem :note-data="note" />
+
+
     </div>
   </main>
 </template>
