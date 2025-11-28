@@ -8,6 +8,7 @@ const message = ref('')
 
 function requestHallos () : void {
   axios
+      // Url für Hallo Backend (Aufgabe 3 zeigen)
       .get('https://webtech-backend-6ot9.onrender.com/sayHello')
       .then((response) => (message.value = response.data))
       .catch((error) => console.log(error))
