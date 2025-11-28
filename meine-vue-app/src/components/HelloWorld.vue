@@ -3,17 +3,13 @@ import {onMounted, ref, Ref} from 'vue'
 
 import axios from 'axios'
 
-type Hallo = { name: string; }
 
-const hallos: Ref<Hallo[]> = ref([])
-const nameField = ref('')
-const affiliationField = ref('')
-const heightField = ref()
+const message = ref('')
 
 function requestHallos () : void {
   axios
-      .get <Hallo[]>('https://webtech-backend-6ot9.onrender.com/sayHello')
-      .then((response) => (hallos.value = response.data))
+      .get('https://webtech-backend-6ot9.onrender.com/sayHello')
+      .then((response) => (message.value = response.data))
       .catch((error) => console.log(error))
 }
 
@@ -30,7 +26,7 @@ onMounted(() => requestHallos())
 </script>
 
 <template>
-  <h1>{{ hallos }}</h1>
+  <h1>{{ message }}</h1>
 
   <div class="card">
     <button type="button" @click="count++">count is {{ count }}</button>
