@@ -24,6 +24,7 @@ Diese Applikation ist ein Shop-Backend-Manager. Sie ermöglicht das Verwalten vo
 
 ## Deployment URL 
 Backend App: https://webtech-backend-6ot9.onrender.com
+https://webtech-backend-6ot9.onrender.com/api/products
 srv-d4kaf7u3jp1c738ncrfg
 Frontend App: https://webtech-frontend-6w6z.onrender.com
 srv-d4kbmd2li9vc73dlnt9g
