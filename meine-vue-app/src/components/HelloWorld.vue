@@ -1,3 +1,4 @@
+//Test-Komponente, ruft URL auf
 <script setup lang="ts">
 import {onMounted, ref, Ref} from 'vue'
 
