@@ -2,6 +2,7 @@ import { describe, it, expect } from 'vitest'
 import { mount } from '@vue/test-utils'
 import NoteItem from '../Noteitem.vue'
 
+// Test-Klasse
 describe('NoteItem.vue', () => {
     it('stellt den Produktnamen und Preis korrekt dar', () => {
         const product = { id: 1, name: 'Test Laptop', price: 999.99 }

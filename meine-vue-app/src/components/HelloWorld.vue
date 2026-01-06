@@ -1,4 +1,4 @@
-//Test-Komponente, ruft URL auf
+//Test-Komponente, ruft URL auf, für finale Demo nicht mehr notwendig
 <script setup lang="ts">
 import {onMounted, ref, Ref} from 'vue'
 
@@ -23,7 +23,7 @@ defineProps({
 
 const count = ref(0)
 
-// Lifecycle Hook
+// Lifecycle Hook, Hallo wird automatisch generiert
 onMounted(() => requestHallos())
 </script>
 

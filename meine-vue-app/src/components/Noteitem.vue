@@ -7,9 +7,11 @@ const emit = defineEmits(['delete']);
 </script>
 
 <template>
+  // Use-Case 7: Detailansicht
   <div class="note-item">
     <h3>{{ noteData.name }}</h3>
     <p>Preis: {{ noteData.price }} €</p>
+    // löschen
     <button class="delete-btn" @click="$emit('delete', noteData.id)">Löschen</button>
   </div>
 </template>

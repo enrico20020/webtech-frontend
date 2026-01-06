@@ -1,12 +1,12 @@
-//Kernstück, verwaltet die Produkte, Formular zum Speichern, API-Aufrufe
+//Kernstück, verwaltet die Logik für die Produkte
 <script setup>
 import NoteItem from './components/Noteitem.vue'
 import { ref, onMounted } from 'vue'
 import axios from "axios"
 
-const Backend_URL = 'https://webtech-backend-6ot9.onrender.com'
 
-// --- State / Reaktive Variablen ---
+// Variablen
+const Backend_URL = 'https://webtech-backend-6ot9.onrender.com'
 const name = ref('')
 const price = ref('')
 const searchQuery = ref("")
@@ -14,14 +14,13 @@ const maxPriceFilter = ref("")
 const notes = ref([])
 const editingId = ref(null) // Speichert die ID, wenn wir gerade ein Produkt bearbeiten
 
-// --- Funktionen ---
+//Funktionen
 
-// GET - Alle Produkte laden (oder Reset)
+//1. Alle Produkte laden (oder Reset)
 async function loadProducts() {
   try {
     const response = await axios.get(`${Backend_URL}/api/products`)
     notes.value = response.data
-    // Such- und Filterfelder beim Reset leeren
     searchQuery.value = ''
     maxPriceFilter.value = ''
   } catch (error) {
@@ -29,7 +28,7 @@ async function loadProducts() {
   }
 }
 
-// POST oder PUT - Produkt speichern (Erstellen oder Aktualisieren)
+//2./ 3. POST oder PUT - Produkt speichern (Erstellen oder Aktualisieren)
 async function saveProduct() {
   if (!name.value || !price.value) {
     alert("Bitte alle Felder ausfüllen!")
@@ -43,15 +42,12 @@ async function saveProduct() {
 
   try {
     if (editingId.value) {
-      // USE-CASE 5: Update (PUT)
       await axios.put(`${Backend_URL}/api/products/${editingId.value}`, dataToSend)
       editingId.value = null
     } else {
-      // USE-CASE 1: Neu anlegen (POST)
       await axios.post(`${Backend_URL}/api/products`, dataToSend)
     }
 
-    // Felder leeren und Liste aktualisieren
     name.value = ''
     price.value = ''
     loadProducts()
@@ -61,7 +57,7 @@ async function saveProduct() {
   }
 }
 
-// USE-CASE 4: Löschen (DELETE)
+//4. Löschen (DELETE)
 async function deleteProduct(id) {
   if (!confirm("Möchten Sie dieses Produkt wirklich löschen?")) return
   try {
@@ -72,16 +68,14 @@ async function deleteProduct(id) {
   }
 }
 
-// Hilfsfunktion: Startet den Bearbeitungsmodus
+// Bearbeitungsmodus
 function startEdit(product) {
   editingId.value = product.id
   name.value = product.name
   price.value = product.price
-  // Scrollt nach oben zum Formular
-  window.scrollTo({ top: 0, behavior: 'smooth' })
 }
 
-// USE-CASE 6: Suchen (GET mit Query-Parameter)
+//5. Produktsuche
 async function search() {
   if (!searchQuery.value) {
     loadProducts()
@@ -95,7 +89,7 @@ async function search() {
   }
 }
 
-// USE-CASE 7: Filtern nach Preis (GET mit Query-Parameter)
+//6. Filtern nach Preis
 async function filter() {
   if (!maxPriceFilter.value) return
   try {
@@ -116,7 +110,7 @@ onMounted(() => {
   <header>
     <h1>Shop Manager</h1>
   </header>
-
+//Eingabe Sektion
   <main>
     <div class="section">
       <h3>{{ editingId ? 'Produkt bearbeiten' : 'Neues Produkt' }}</h3>
@@ -127,7 +121,7 @@ onMounted(() => {
     </div>
 
     <hr>
-
+// Such- und Filter Bar
     <div class="section">
       <input v-model="searchQuery" placeholder="Suchen..." @input="search" />
       <input v-model="maxPriceFilter" type="number" placeholder="Max €" />
@@ -136,7 +130,7 @@ onMounted(() => {
     </div>
 
     <hr>
-
+// Produkt- Grid
     <div class="product-grid">
       <div v-for="note in notes" :key="note.id" class="item-card">
         <NoteItem :note-data="note" @delete="deleteProduct" />
@@ -164,7 +158,7 @@ header h1 {
   margin-bottom: 40px;
 }
 
-/* Sektions-Styling (Formulare & Suche) */
+/* Formulare & Suche */
 .section {
   background: #f8f9fa;
   padding: 20px;
@@ -183,7 +177,7 @@ header h1 {
   color: #34495e;
 }
 
-/* Input & Button Styling */
+/* Input & Button */
 input {
   padding: 10px;
   border: 1px solid #ddd;
@@ -206,8 +200,8 @@ button:hover {
 }
 
 /* Farben für Buttons */
-button { background-color: #3498db; color: white; } /* Blau für Speichern */
-button:nth-of-type(2) { background-color: #95a5a6; } /* Grau für Reset/Abbrechen */
+button { background-color: #3498db; color: white; }
+button:nth-of-type(2) { background-color: #95a5a6; }
 
 /* Produkt-Grid (Karten nebeneinander) */
 .product-grid {
